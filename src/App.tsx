@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import GoofyButton from "./components/GoofyButton";
+import { decode } from "./utils/encodingUtils";
 
 function App() {
   const [msg, setMsg] = useState("");
@@ -10,30 +11,33 @@ function App() {
   const [victory, setVictory] = useState("");
   const [show, setShow] = useState(false);
   useEffect(() => {
-    let params = new URLSearchParams(document.location.search);
-    let encTitle = params.get("t") || "U3VycHJpc2Uh";
-    setTitle(atob(encTitle));
-    let encMsg = params.get("m") || "QmVzdCBnaXJsZnJpZW5kIQ==";
-    setMsg(atob(encMsg));
+    const params = new URLSearchParams(document.location.search);
+    const encTitle = params.get("t") || "dCBwYXJhbQ==";
 
-    let encVictory = params.get("v") || "VGhhbmsgeW91IDwz";
-    setVictory(atob(encVictory));
+    setTitle(decode(encTitle));
+    const encMsg = params.get("m") || "bSBwYXJhbQ==";
+    setMsg(decode(encMsg));
 
-    let encYes = params.get("y") || "WWVz";
-    setYes(atob(encYes));
-    let encNo = params.get("n") || "Tm8K";
-    setNo(atob(encNo));
+    const encVictory = params.get("v") || "diBwYXJhbQ==";
+    setVictory(decode(encVictory));
+
+    const encYes = params.get("y") || "eSBwYXJhbQ==";
+    setYes(decode(encYes));
+    const encNo = params.get("n") || "biBwYXJhbQ==";
+    setNo(decode(encNo));
   }, [setMsg, setTitle, setYes, setNo, setVictory]);
-  useEffect(() => {
-    setImg(
-      "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExOTI2YWx3dHY5ODR1dWlwaHZuampjcGY2Y3NnZnptcnVibjlvMDRxaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1zZ9IIFeFEVLaeqzOq/giphy.gif",
-    );
-  }, [setImg]);
   return (
     <>
       <title>{title}</title>
       <div className="flex flex-col justify-center items-center m-1">
-        <img className="w-100 h-100 rounded flex-1" src={img} />
+        <img
+          className="w-100 h-100 rounded flex-1"
+          src={
+            img
+              ? img
+              : "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExOTI2YWx3dHY5ODR1dWlwaHZuampjcGY2Y3NnZnptcnVibjlvMDRxaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1zZ9IIFeFEVLaeqzOq/giphy.gif"
+          }
+        />
         <p className="flex-1 text-4xl mt-3">{show ? victory : msg}</p>
         {show === false && (
           <div className="flex-1 flex mt-4 justify-center items-center">
