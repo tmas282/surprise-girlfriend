@@ -68,7 +68,10 @@ function App() {
           className="block flex-1 text-black text-sm bg-yellow-200 p-2 rounded-xl m-2 mt-5 hover:bg-yellow-300"
           onClick={() => {
             if (ws === true) {
-              const audio = new Audio(window.location + "zap.mp3");
+              const audio = new Audio(
+                window.location.href.replace(window.location.search, "") +
+                  "zap.mp3",
+              );
               audio.play();
               return;
             }
