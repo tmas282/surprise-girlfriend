@@ -69,8 +69,7 @@ function App() {
           onClick={() => {
             if (ws === true) {
               const audio = new Audio(
-                window.location.href.replace(window.location.search, "") +
-                  "zap.mp3",
+                window.location.origin + window.location.pathname + "zap.mp3",
               );
               audio.play();
               return;
