@@ -3,14 +3,19 @@ import { useState } from "react";
 const GoofyButton = ({
   msg,
   className,
+  size,
+  setSize,
 }: {
   msg: string;
   className?: string;
+  size: number;
+  setSize: React.Dispatch<React.SetStateAction<number>>;
 }) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isVisible, setIsVisible] = useState(true);
 
   const moveButton = () => {
+    setSize(size + 1);
     // Calculate random coordinates within the screen bounds
     // We subtract some padding (150px) so it doesn't go off-edge
     const randomX = Math.random() * (window.innerWidth - 150);
@@ -28,7 +33,7 @@ const GoofyButton = ({
   return (
     <button
       className={`
-        fixed text-black text-xl bg-red-200 p-5 px-20 rounded-xl transition-all duration-75 ease-in-out ${className}
+        fixed text-black text-lg bg-red-200 p-5 px-20 rounded-xl transition-all duration-75 ease-in-out ${className}
         ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-50"}
         ${position.x === 0 ? "relative" : "fixed"}
       `}
@@ -36,8 +41,11 @@ const GoofyButton = ({
         left: position.x !== 0 ? `${position.x}px` : "auto",
         top: position.y !== 0 ? `${position.y}px` : "auto",
         zIndex: 999,
+        width: 80 * 3,
+        height: 80,
       }}
       onMouseEnter={moveButton}
+      onClick={moveButton}
     >
       {msg}
     </button>
